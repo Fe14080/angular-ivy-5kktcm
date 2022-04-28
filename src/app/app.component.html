@@ -1,0 +1,194 @@
+<div class="container mt-5">
+  <ul class="list-group">
+    <li *ngFor="let user of users" class="list-group-item">
+      <img src="{{ user.picture.thumbnail }}" class="rounded-circle" />
+      {{ user.name.first }} {{ user.name.last }}
+    </li>
+  </ul>
+</div>
+<div class="container mt-3">
+  <nav>
+    <ul class="pagination">
+      <li class="page-item" [class.disabled]="this.userPage <= 1">
+        <button (click)="moverPaginaAnterior()" class="page-link">
+          Anterior
+        </button>
+      </li>
+      <li *ngIf="userPage > 2" class="page-item">
+        <button (click)="moverParaPagina(userPage - 2)" class="page-link">
+          {{ userPage - 2 }}
+        </button>
+      </li>
+      <li *ngIf="userPage > 1" class="page-item">
+        <button (click)="moverParaPagina(userPage - 1)" class="page-link">
+          {{ userPage - 1 }}
+        </button>
+      </li>
+      <li class="page-item active">
+        <button class="page-link">{{ userPage }}</button>
+      </li>
+      <li class="page-item">
+        <button (click)="moverParaPagina(userPage + 1)" class="page-link">
+          {{ userPage + 1 }}
+        </button>
+      </li>
+      <li class="page-item">
+        <button (click)="moverParaPagina(userPage + 2)" class="page-link">
+          {{ userPage + 2 }}
+        </button>
+      </li>
+      <li *ngIf="userPage <= 2" class="page-item">
+        <button (click)="moverParaPagina(userPage + 3)" class="page-link">
+          {{ userPage + 3 }}
+        </button>
+      </li>
+      <li *ngIf="userPage <= 1" class="page-item">
+        <button (click)="moverParaPagina(userPage + 4)" class="page-link">
+          {{ userPage + 4 }}
+        </button>
+      </li>
+      <li class="page-item">
+        <button (click)="moverProximaPagina()" class="page-link">
+          Próximo
+        </button>
+      </li>
+    </ul>
+  </nav>
+</div>
+
+<div class="container mt-3">
+  <app-button (click)="moverPaginaAnterior()" [outline]="true" class="mx-1"
+    >Anterior</app-button
+  >
+  <app-button (click)="moverProximaPagina()" [outline]="true"
+    >Próximo</app-button
+  >
+</div>
+
+<div class="container mt-3">
+  <div class="dropdown">
+    <button
+      (click)="showDropdown = !showDropdown"
+      class="btn btn-secondary dropdown-toggle"
+      type="button"
+    >
+      Quantidade {{ userResults }}
+    </button>
+    <ul class="dropdown-menu" [class.show]="showDropdown">
+      <li>
+        <button (click)="trocarQuantidadeDaPagina(3)" class="dropdown-item">
+          3
+        </button>
+      </li>
+      <li>
+        <button (click)="trocarQuantidadeDaPagina(5)" class="dropdown-item">
+          5
+        </button>
+      </li>
+      <li>
+        <button (click)="trocarQuantidadeDaPagina(10)" class="dropdown-item">
+          10
+        </button>
+      </li>
+      <li>
+        <button (click)="trocarQuantidadeDaPagina(15)" class="dropdown-item">
+          15
+        </button>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="container mt-5">
+  <app-card
+    [titulo]="card.titulo"
+    [descricao]="card.descricao"
+    [url]="card.imagemUrl"
+    (buttonClicked)="onClick($event)"
+  >
+  </app-card>
+
+  <div class="row mt-3">
+    <app-button
+      [color]="'primary'"
+      [outline]="true"
+      [size]="'big'"
+      [badge]="'123'"
+      [colorBadge]="'dark'"
+      [badgeCorner]="true"
+    >
+      Botão 1
+    </app-button>
+  </div>
+
+  <div class="row mt-3">
+    <app-button
+      [color]="'success'"
+      [outline]="false"
+      [size]="'normal'"
+      [badge]="'teste'"
+      [colorBadge]="'danger'"
+    >
+      Botão 2
+    </app-button>
+  </div>
+
+  <div class="row mt-3 mb-3">
+    <app-button [color]="'danger'" [outline]="true" [size]="'small'"
+      >Botão 3
+    </app-button>
+  </div>
+</div>
+
+<div class="container mt-3 mb-3">
+  <app-alert [color]="'warning'">Exemplo de alerta!</app-alert>
+
+  <app-alert
+    *ngIf="showAlert"
+    (onClose)="showAlert = false"
+    [closeable]="true"
+    [color]="'success'"
+  >
+    Exemplo de <strong>alerta!</strong>
+  </app-alert>
+
+  <app-alert [color]="'success'">
+    Exemplo de <strong> alerta! </strong>
+    <app-button [color]="'dark'" [size]="'small'">Botão 3 </app-button>
+  </app-alert>
+</div>
+
+<div class="container mt-5 mb-5">
+  <h3>Live example</h3>
+  <app-alert
+    [closeable]="true"
+    *ngFor="let alert of alerts; let i = index"
+    (onClose)="removeLiveAlert(i)"
+    [color]="'success'"
+    >{{ alert }}</app-alert
+  >
+  <app-button (click)="onLiveAlertClick()">Show Live Alert</app-button>
+</div>
+
+<div class="container">
+  <app-countdown #timer [startValue]="10"></app-countdown>
+  <app-button (click)="timer.start()" class="mx-1" [color]="'success'"
+    >Start</app-button
+  >
+  <app-button (click)="timer.pause()" [color]="'danger'">Pause</app-button>
+  <app-button (click)="timer.reset()" class="mx-1" [color]="'dark'"
+    >Reset</app-button
+  >
+  <app-button
+    [outline]="true"
+    (click)="resetTo100()"
+    class="mx-1"
+    [color]="'dark'"
+    >Reset To 100
+  </app-button>
+</div>
+
+<div class="container mt-3 mb-5">
+  <app-badge class="mx-1" [rounded]="true">Badge1</app-badge>
+  <app-badge [color]="'warning'">Badge2</app-badge>
+</div>
